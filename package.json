@@ -1,5 +1,6 @@
 {
   "name": "geomagnetic-coords",
+  "description": "Dependency-free geomagnetic<-->geographic coordinate transformer ",
   "version": "0.0.1",
   "author": "Joseph Beuckman <joebeuckman@gmail.com> (jbeuckm.github.io)",
   "repository": {
