@@ -1,18 +1,18 @@
-export function multiplyVectorByMatrix(vector, matrix) {
+export function multiplyVectorByMatrix(vector: number[], matrix: number[][]) {
   // Check if the vector and matrix are compatible for multiplication
   if (vector.length !== matrix[0].length) {
-    throw new Error('Incompatible dimensions for multiplication')
+    throw new Error("Incompatible dimensions for multiplication");
   }
 
   // Initialize the result vector with zeros
-  let result = Array(matrix.length).fill(0)
+  let result = Array(matrix.length).fill(0);
 
   // Perform the multiplication
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < vector.length; j++) {
-      result[i] += matrix[i][j] * vector[j]
+      result[i] += matrix[i][j] * vector[j];
     }
   }
 
-  return result
+  return result;
 }

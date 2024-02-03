@@ -1,20 +1,23 @@
 {
   "name": "geomagnetic-coords",
   "description": "Dependency-free geomagnetic<-->geographic coordinate transformer ",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Joseph Beuckman <joebeuckman@gmail.com> (jbeuckm.github.io)",
   "repository": {
     "type": "git",
     "url": "git@github.com:jbeuckm/geomagnetic-coordinates.git"
   },
   "type": "module",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "tsc"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-typescript": "^7.23.3",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "typescript": "^5.3.3"
   }
 }
