@@ -1,15 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.mag2geo = void 0;
-const findMagneticPole_1 = require("./findMagneticPole");
-const multiplyVectorByMatrix_1 = require("./multiplyVectorByMatrix");
+import { findMagneticPole } from './findMagneticPole';
+import { multiplyVectorByMatrix } from './multiplyVectorByMatrix';
 const HALF_PI = Math.PI / 2;
 const TO_RADIANS = Math.PI / 180;
 const TO_DEGREES = 180 / Math.PI;
 // based on https://idlastro.gsfc.nasa.gov/ftp/pro/astro/mag2geo.pro
 // FUNCTION mag2geo,incoord
-const mag2geo = (request) => {
-    const magNorth = (0, findMagneticPole_1.findMagneticPole)(request.date);
+export const mag2geo = (request) => {
+    const magNorth = findMagneticPole(request.date);
     //         ; SOME 'constants'...
     //         Dlong=288.59D   ; longitude (in degrees) of Earth's magnetic south pole
     let Dlong = magNorth.longitude;
@@ -61,7 +58,7 @@ const mag2geo = (request) => {
     //         togeolat[1,1]=1.
     togeolat[1][1] = 1;
     //         out= togeolat # [x,y,z]
-    let out = (0, multiplyVectorByMatrix_1.multiplyVectorByMatrix)([x, y, z], togeolat);
+    let out = multiplyVectorByMatrix([x, y, z], togeolat);
     //         ;Second rotation matrix : rotation around plane of the equator, from
     //         ;the meridian containing the magnetic poles to the Greenwich meridian.
     //         maglong2geolong=dblarr(3,3)
@@ -81,7 +78,7 @@ const mag2geo = (request) => {
     //         maglong2geolong[2,2]=1.
     maglong2geolong[2][2] = 1;
     //         out=maglong2geolong # out
-    out = (0, multiplyVectorByMatrix_1.multiplyVectorByMatrix)(out, maglong2geolong);
+    out = multiplyVectorByMatrix(out, maglong2geolong);
     //         ;convert back to latitude, longitude and altitude
     //         glat=atan(out[2,*],sqrt(out[0,*]^2+out[1,*]^2))
     let glat = Math.atan2(out[2], Math.sqrt(Math.pow(out[0], 2) + Math.pow(out[1], 2)));
@@ -95,4 +92,3 @@ const mag2geo = (request) => {
     //         RETURN,[glat,glon]
     return { latitude: glat, longitude: glon };
 };
-exports.mag2geo = mag2geo;

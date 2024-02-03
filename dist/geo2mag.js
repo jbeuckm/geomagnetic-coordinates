@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.geo2mag = void 0;
-const findMagneticPole_1 = require("./findMagneticPole");
-const multiplyVectorByMatrix_1 = require("./multiplyVectorByMatrix");
+import { findMagneticPole } from './findMagneticPole';
+import { multiplyVectorByMatrix } from './multiplyVectorByMatrix';
 const HALF_PI = Math.PI / 2;
 const TO_RADIANS = Math.PI / 180;
 const TO_DEGREES = 180 / Math.PI;
@@ -11,8 +8,8 @@ const TO_DEGREES = 180 / Math.PI;
 // ; INPUT:
 // ;       gcoord = a 2-element array of geographic [latitude,longitude], or an
 // ;                array [2,n] of n such coordinates.
-const geo2mag = (request) => {
-    const magNorth = (0, findMagneticPole_1.findMagneticPole)(request.date);
+export const geo2mag = (request) => {
+    const magNorth = findMagneticPole(request.date);
     //   ; SOME 'constants'...
     //   Dlong=288.59D   ; longitude (in degrees) of Earth's magnetic south pole
     //                   ;(which is near the geographic north pole!) (1995)
@@ -66,7 +63,7 @@ const geo2mag = (request) => {
     //   geolong2maglong[2,2]=1.
     geolong2maglong[2][2] = 1;
     //   out=geolong2maglong # [x,y,z]
-    let out = (0, multiplyVectorByMatrix_1.multiplyVectorByMatrix)([x, y, z], geolong2maglong);
+    let out = multiplyVectorByMatrix([x, y, z], geolong2maglong);
     //   ;Second rotation : in the plane of the current meridian from geographic
     //   ;                  pole to magnetic dipole pole.
     //   tomaglat=dblarr(3,3)
@@ -86,7 +83,7 @@ const geo2mag = (request) => {
     //   tomaglat[1,1]=1.
     tomaglat[1][1] = 1;
     //   out= tomaglat # out
-    out = (0, multiplyVectorByMatrix_1.multiplyVectorByMatrix)(out, tomaglat);
+    out = multiplyVectorByMatrix(out, tomaglat);
     //   ;convert back to latitude, longitude and altitude
     //   mlat=atan(out[2,*],sqrt(out[0,*]^2+out[1,*]^2))
     let mlat = Math.atan2(out[2], Math.sqrt(Math.pow(out[0], 2) + Math.pow(out[1], 2)));
@@ -101,4 +98,3 @@ const geo2mag = (request) => {
     //   RETURN,[mlat,mlon]
     return { latitude: mlat, longitude: mlon };
 };
-exports.geo2mag = geo2mag;

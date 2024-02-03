@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.multiplyVectorByMatrix = void 0;
-function multiplyVectorByMatrix(vector, matrix) {
+export function multiplyVectorByMatrix(vector, matrix) {
     // Check if the vector and matrix are compatible for multiplication
     if (vector.length !== matrix[0].length) {
         throw new Error("Incompatible dimensions for multiplication");
@@ -16,4 +13,3 @@ function multiplyVectorByMatrix(vector, matrix) {
     }
     return result;
 }
-exports.multiplyVectorByMatrix = multiplyVectorByMatrix;
